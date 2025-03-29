@@ -32,26 +32,28 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductDTO getProductById(Long id) {
+    public ProductDTO getProductById(int id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
         return productMapper.toDTO(product);
     }
 
     public ProductDTO saveProduct(ProductDTO dto) {
-        CategoryDTO category = dto.getCategory();
-        CategoryDTO existingCategory = categoryService.getCategoryById(category.getCategoryID());
-        dto.setCategory(new CategoryDTO(existingCategory.getCategoryID(), existingCategory.getLabel()));
+        CategoryDTO cat=dto.getCategory();
+        CategoryDTO existingCategory = categoryService.getCategoryById(cat.getCategoryID());
+        dto.setCategory(existingCategory);
         Product savedProduct = productRepository.save(productMapper.toBO(dto));
-        return dto;
+        return productMapper.toDTO(savedProduct);
     }
 
-    public void deleteProduct(Long id) {
+    public void deleteProduct(Integer id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
         productRepository.deleteById(id);
     }
 
 
-    public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
+    public ProductDTO updateProduct(Integer id, ProductDTO productDTO) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
         product.setLabel(productDTO.getLabel());

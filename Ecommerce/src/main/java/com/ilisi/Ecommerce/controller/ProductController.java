@@ -26,58 +26,83 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getProductById(@PathVariable Long id) {
+    public ResponseEntity<Response> getProductById(@PathVariable Integer id) {
         ProductDTO product = productService.getProductById(id);
         Response res= new Response(true , HttpStatus.OK , "success" , product);
         return new ResponseEntity<Response>(res, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Response> saveProduct(@RequestBody ProductDTO productDTO) {
-        ProductDTO savedProduct = productService.saveProduct(productDTO);
+    public ResponseEntity<Response> saveProduct(@RequestBody ProductDTO newProduct) {
+        ProductDTO savedProduct = productService.saveProduct(newProduct);
         Response res= new Response(true , HttpStatus.CREATED , "Product Created Successfully" , savedProduct);
         return new ResponseEntity<Response>(res, HttpStatus.CREATED);
     }
-    @PostMapping("/search/{label}")
-    public ResponseEntity<Response> searchProductsByLabel(@PathVariable String label) {
-        List<ProductDTO> products = productService.searchProductsByLabel(label);
-        Response res= new Response(true , HttpStatus.OK , "success" , products);
-        return new ResponseEntity<Response>(res, HttpStatus.OK);
+
+    @GetMapping("/search")
+    public ResponseEntity<Response> searchProductsByLabel(@RequestParam(required = false) String label)
+    {
+
+        if (label == null || label.trim().isEmpty()) {
+            return ResponseEntity.badRequest()
+                    .body(new Response(false, HttpStatus.BAD_REQUEST, "Label cannot be empty", null));
+        }
+
+        List<ProductDTO> products = productService.searchProductsByLabel(label.trim());
+
+        if (products.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new Response(false, HttpStatus.NOT_FOUND, "No products found", null));
+        }
+
+        Response res = new Response(true, HttpStatus.OK, "Success", products);
+        return ResponseEntity.ok(res);
     }
 
     @GetMapping("/filter")
     public ResponseEntity<Response> filterProducts(
-            @RequestParam(required = false, defaultValue = "-1" , name ="min") Double minPrice,
-            @RequestParam(required = false, defaultValue = "-1" ,name ="max") Double maxPrice,
-            @RequestParam(required = false, defaultValue = "0", name = "cat" ) Integer categoryID)
-    {
+            @RequestParam(required = false, name = "min") Double minPrice,
+            @RequestParam(required = false, name = "max") Double maxPrice,
+            @RequestParam(required = false, name = "cat") Integer categoryID) {
+
         List<ProductDTO> products;
-        if((categoryID==null || categoryID<0 ) && (minPrice>=0 && maxPrice>0))
-          products = productService.filterByPriceRange(minPrice, maxPrice);
-        else if((minPrice<0 || maxPrice<=0) && (categoryID!=null && categoryID>0))
-          products = productService.filterProductsByCategory(categoryID);
-        else{
 
+        boolean isCategoryInvalid = (categoryID == null || categoryID <= 0);
+        boolean isPriceRangeInvalid = (minPrice == null || minPrice < 0 || maxPrice == null || maxPrice <= 0 || minPrice > maxPrice);
+
+        if (isCategoryInvalid && !isPriceRangeInvalid) {
+
+            products = productService.filterByPriceRange(minPrice, maxPrice);
+        } else if (!isCategoryInvalid && isPriceRangeInvalid) {
+
+            products = productService.filterProductsByCategory(categoryID);
+        } else if (!isCategoryInvalid && !isPriceRangeInvalid) {
+
+            products = productService.filterProductsByCategoryAndPriceRange(categoryID, minPrice, maxPrice);
+        } else {
+            // If both are invalid, return an empty list
+            return ResponseEntity.badRequest()
+                    .body(new Response(false, HttpStatus.BAD_REQUEST, "Invalid filters provided", null));
         }
-          products = productService.filterProductsByCategoryAndPriceRange(categoryID, minPrice, maxPrice);
-        Response res= new Response(true , HttpStatus.OK , "success" , products);
 
-        return new ResponseEntity<Response>(res, HttpStatus.OK);
+
+        return ResponseEntity.ok(new Response(true, HttpStatus.OK, "Success", products));
     }
 
 
-   @PutMapping("/{id}")
-    public ResponseEntity<Response> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Response> updateProduct(@PathVariable Integer id, @RequestBody ProductDTO productDTO) {
         ProductDTO updatedProduct = productService.updateProduct(id, productDTO);
         Response res= new Response(true , HttpStatus.OK , "Product Updated Successfully" , updatedProduct);
         return new ResponseEntity<Response>(res, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Response> deleteProduct(@PathVariable Integer id) {
         productService.deleteProduct(id);
-        Response res= new Response(true , HttpStatus.NO_CONTENT , "Product Deleted Successfully" , null);
-        return new ResponseEntity<Response>(res,HttpStatus.NO_CONTENT);
+        Response res= new Response(true , HttpStatus.OK, "Product with id " + id + " Deleted Successfully" , null);
+        return new ResponseEntity<Response>(res,HttpStatus.OK);
     }
 
 }
