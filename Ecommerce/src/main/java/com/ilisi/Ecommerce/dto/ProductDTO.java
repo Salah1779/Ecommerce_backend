@@ -5,6 +5,7 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class ProductDTO {
     private int productID;
     private String label;
@@ -15,49 +16,10 @@ public class ProductDTO {
     private CategoryDTO category;
 
 
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public double getRetailPrice() {
-        return retailPrice;
-    }
 
     public void setRetailPrice(double retailPrice) {
         if(retailPrice < 0) retailPrice = 0;
         this.retailPrice = retailPrice;
-    }
-
-    public int getStockQuantity() {
-        return stockQuantity;
     }
 
     public void setStockQuantity(int stockQuantity) {
@@ -65,11 +27,4 @@ public class ProductDTO {
         this.stockQuantity = stockQuantity;
     }
 
-    public CategoryDTO getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryDTO category) {
-        this.category = category;
-    }
 }

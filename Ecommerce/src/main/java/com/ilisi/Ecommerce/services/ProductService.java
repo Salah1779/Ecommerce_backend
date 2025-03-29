@@ -5,7 +5,7 @@ import com.ilisi.Ecommerce.bo.Product;
 import com.ilisi.Ecommerce.dto.CategoryDTO;
 import com.ilisi.Ecommerce.dto.ProductDTO;
 import com.ilisi.Ecommerce.exception.ProductNotFoundException;
-import com.ilisi.Ecommerce.mapper.ProductMapper;
+import com.ilisi.Ecommerce.services.mapper.ProductMapper;
 import com.ilisi.Ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,8 +76,6 @@ public class ProductService {
         }
         return products.stream().map(productMapper::toDTO).collect(Collectors.toList());
     }
-
-
 
     public List<ProductDTO> filterByPriceRange(double minPrice, double maxPrice) {
         List<Product> products = productRepository.findByRetailPriceBetween(minPrice, maxPrice);

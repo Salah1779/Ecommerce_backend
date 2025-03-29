@@ -2,7 +2,7 @@ package com.ilisi.Ecommerce.services;
 
 import com.ilisi.Ecommerce.dto.CategoryDTO;
 import com.ilisi.Ecommerce.exception.CategoryNotFoundException;
-import com.ilisi.Ecommerce.mapper.CategoryMapper;
+import com.ilisi.Ecommerce.services.mapper.CategoryMapper;
 import com.ilisi.Ecommerce.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.ilisi.Ecommerce.services;
 
 import com.ilisi.Ecommerce.dto.ClientDTO;
-import com.ilisi.Ecommerce.mapper.ClientMapper;
+import com.ilisi.Ecommerce.services.mapper.ClientMapper;
 import com.ilisi.Ecommerce.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

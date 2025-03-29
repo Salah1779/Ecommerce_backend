@@ -1,4 +1,4 @@
-package com.ilisi.Ecommerce.mapper;
+package com.ilisi.Ecommerce.services.mapper;
 
 import com.ilisi.Ecommerce.bo.Product;
 import com.ilisi.Ecommerce.dto.ProductDTO;

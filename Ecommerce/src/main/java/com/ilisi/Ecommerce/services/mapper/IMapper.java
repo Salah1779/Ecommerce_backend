@@ -1,4 +1,4 @@
-package com.ilisi.Ecommerce.mapper;
+package com.ilisi.Ecommerce.services.mapper;
 
 public interface IMapper<BO, DTO> {
     /**

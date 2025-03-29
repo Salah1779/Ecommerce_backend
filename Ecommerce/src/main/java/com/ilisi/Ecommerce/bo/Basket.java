@@ -12,8 +12,7 @@ import java.util.Set;
 @Table(name = "basket")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Basket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
