@@ -50,7 +50,9 @@ public class OrderService {
     }
 
     // ✅ Update order state
-    public OrderDTO updateOrderState(Long orderId, String newState) {
+    //the Order class has any attribute that state
+
+  /*  public OrderDTO updateOrderState(Long orderId, String newState) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
 
         if (optionalOrder.isPresent()) {
@@ -61,5 +63,5 @@ public class OrderService {
         } else {
             return null; // Order not found
         }
-    }
+    }*/
 }

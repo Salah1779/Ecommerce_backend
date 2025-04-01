@@ -33,14 +33,14 @@ public class ProductService {
     }
 
     public ProductDTO getProductById(int id) {
-        Product product = productRepository.findById(id)
+        Product product = productRepository.findById(Integer.valueOf(id))
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
         return productMapper.toDTO(product);
     }
 
     public ProductDTO saveProduct(ProductDTO dto) {
         CategoryDTO cat=dto.getCategory();
-        CategoryDTO existingCategory = categoryService.getCategoryById(cat.getCategoryID());
+        CategoryDTO existingCategory = categoryService.getCategoryById(Integer.valueOf(cat.getCategoryID()));
         dto.setCategory(existingCategory);
         Product savedProduct = productRepository.save(productMapper.toBO(dto));
         return productMapper.toDTO(savedProduct);
@@ -62,7 +62,7 @@ public class ProductService {
         product.setRetailPrice(productDTO.getRetailPrice());
         product.setStockQuantity(productDTO.getStockQuantity());
         product .setCategory(new Category(productDTO.getCategory().getCategoryID(),
-                              productDTO.getCategory().getLabel()
+                              productDTO.getCategory().getLabel(),null
                             ));
 
         Product updatedProduct = productRepository.save(product);

@@ -9,6 +9,8 @@ import java.util.Set;
 @Entity
 @Table(name = "categories")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,5 +19,6 @@ public class Category implements java.io.Serializable {
     private String label;
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> products;
+
 
 }
