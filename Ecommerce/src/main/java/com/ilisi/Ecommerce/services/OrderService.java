@@ -4,6 +4,7 @@ import com.ilisi.Ecommerce.dto.OrderDTO;
 import com.ilisi.Ecommerce.bo.Order;
 import com.ilisi.Ecommerce.services.mapper.OrderMapper;
 import com.ilisi.Ecommerce.repository.OrderRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,31 @@ public class OrderService {
         }
         orderRepository.deleteById(orderId);
         return true;
+    }
+
+    public OrderDTO getOrderById(int id) {
+        Optional<Order> order = orderRepository.findById((long) id);
+        if (order.isEmpty()) {
+            return null; // Order not found
+        }
+        return  orderMapper.toDTO(
+                order.get()
+        );
+
+    }
+
+    public OrderDTO updateOrder(int id, OrderDTO order) {
+        Optional<Order> optionalOrder = orderRepository.findById((long) id);
+
+        if (optionalOrder.isPresent()) {
+            Order orderToUpdate = optionalOrder.get();
+            orderToUpdate.setOrderDate(order.getOrderDate());
+            orderToUpdate.setTotal(order.getTotal());
+            Order updatedOrder = orderRepository.save(orderToUpdate);
+            return orderMapper.toDTO(updatedOrder);
+        } else {
+            return null; // Order not found
+        }
     }
 
     // ✅ Update order state
