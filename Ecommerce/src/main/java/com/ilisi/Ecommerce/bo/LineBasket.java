@@ -17,25 +17,25 @@ public class LineBasket implements Serializable {
     @ManyToOne
     @JoinColumn(name = "productID")
     private Product product;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "basketID")
     private Basket basket;
     private int quantity;
 
 
-    LineBasket(Basket basket, Product product,int quantity) {
+   public  LineBasket(Basket basket, Product product,int quantity) {
         this.basket = basket;
         this.product = product;
         this.quantity = quantity;
     }
 
-    boolean decreaseQuantity() {
+    public boolean decreaseQuantity() {
         if(quantity==0) return false;
         this.quantity--;
         return true;
     }
 
-    boolean increaseQuantity() {
+    public boolean increaseQuantity() {
         if(product.getStockQuantity() <= quantity) return false;
         this.quantity ++;
         return true;

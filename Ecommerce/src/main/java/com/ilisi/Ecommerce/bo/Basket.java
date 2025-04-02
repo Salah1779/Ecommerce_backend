@@ -30,30 +30,30 @@ public class Basket implements Serializable {
     @OneToMany(mappedBy = "basket" , fetch = FetchType.EAGER)
     private Set<LineBasket> lineBaskets;
 
- void setEmptyState() {
+ public void setEmptyState() {
      if(lineBaskets.isEmpty())
          basketState = BasketState.EMPTY;
  }
- boolean isEmpty() {
+  public boolean isEmpty() {
      return lineBaskets.isEmpty();
  }
 
- boolean isActive() {
+ public boolean isActive() {
      return basketState == BasketState.ACTIVE;
  }
 
- void setActiveState() {
+ public void setActiveState() {
      if(!this.lineBaskets.isEmpty())
          basketState = BasketState.ACTIVE;
  }
 
- void setValidatedState() {
+ public void setValidatedState() {
      basketState = BasketState.VALIDATED;
  }
 
-void addLineBasket(Product product, int quantity) {
+public void addLineBasket(Product product, int quantity) {
      if(product.getStockQuantity()==0) {
-         throw new OutOfStockException("Product out of stock: " + product.getLabel()););
+         throw new OutOfStockException("Product out of stock: " + product.getLabel());
      }
      if(product.getStockQuantity() >= quantity && quantity > 0) {
          LineBasket lineBasket = new LineBasket(this, product, quantity);
@@ -62,9 +62,7 @@ void addLineBasket(Product product, int quantity) {
      else {
          throw new IllegalArgumentException("Invalid quantity for product: " + product.getLabel());
      }
-
 }
-
 
 
 }

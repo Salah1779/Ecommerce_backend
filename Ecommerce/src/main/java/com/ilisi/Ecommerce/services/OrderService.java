@@ -22,13 +22,11 @@ public class OrderService {
 
 
 
-    // ✅ Get all orders
     public List<OrderDTO> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
         return orders.stream().map(orderMapper::toDTO).collect(Collectors.toList());
     }
 
-    // ✅ Get orders by client ID
     public List<OrderDTO> getOrdersByClient(Long clientId) {
         List<Order> orders = orderRepository.findByClientId(clientId);
         return orders.stream().map(orderMapper::toDTO).collect(Collectors.toList());
@@ -41,7 +39,7 @@ public class OrderService {
         return orderMapper.toDTO(savedOrder);
     }
 
-    // ✅ Delete an order
+
     public boolean deleteOrder(Long orderId) {
         if (!orderRepository.existsById(orderId)) {
             return false; // Order not found

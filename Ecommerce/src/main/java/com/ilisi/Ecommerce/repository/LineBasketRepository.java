@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LineBasketRepository extends JpaRepository<LineBasket, Long> {
+public interface LineBasketRepository extends JpaRepository<LineBasket, Integer> {
 
 }
