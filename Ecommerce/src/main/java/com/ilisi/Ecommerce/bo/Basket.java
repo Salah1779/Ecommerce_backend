@@ -51,17 +51,20 @@ public class Basket implements Serializable {
      basketState = BasketState.VALIDATED;
  }
 
-public void addLineBasket(Product product, int quantity) {
+public LineBasket addLineBasket(Product product, int quantity) {
+    LineBasket newLineBasket ;
      if(product.getStockQuantity()==0) {
          throw new OutOfStockException("Product out of stock: " + product.getLabel());
      }
      if(product.getStockQuantity() >= quantity && quantity > 0) {
-         LineBasket lineBasket = new LineBasket(this, product, quantity);
-         this.lineBaskets.add(lineBasket);
+         newLineBasket = new LineBasket(this, product, quantity);
+         this.lineBaskets.add(newLineBasket);
+
      }
      else {
          throw new IllegalArgumentException("Invalid quantity for product: " + product.getLabel());
      }
+    return newLineBasket;
 }
 
 

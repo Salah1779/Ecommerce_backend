@@ -1,16 +1,19 @@
 package com.ilisi.Ecommerce.services;
 
-import com.ilisi.Ecommerce.bo.Basket;
-import com.ilisi.Ecommerce.bo.BasketState;
-import com.ilisi.Ecommerce.bo.Client;
-import com.ilisi.Ecommerce.bo.Product;
+import com.ilisi.Ecommerce.bo.*;
+import com.ilisi.Ecommerce.dto.LineBasketDTO;
 import com.ilisi.Ecommerce.exception.ResourceNotFoundException;
 import com.ilisi.Ecommerce.repository.BasketRepository;
 import com.ilisi.Ecommerce.services.mapper.ClientMapper;
+import com.ilisi.Ecommerce.services.mapper.LineBasketMapper;
 import com.ilisi.Ecommerce.services.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+
 @Transactional
 @Service
 public class BasketService {
@@ -20,22 +23,22 @@ public class BasketService {
 
     @Autowired
     private ClientService clientService;
-    @Autowired
-    private ClientMapper clientMapper;
 
     @Autowired
     private ProductService productService;
-    @Autowired
-    private ProductMapper productMapper;
 
     @Autowired
-    private  LineBasketService lineBasketService;
+    private LineBasketMapper lineBasketMapper;
 
+    public List<LineBasketDTO> getAllLineBasket(int clientID) {
+        Basket basket = basketRepository.findByClient(clientID)
+                .orElseThrow(() -> new ResourceNotFoundException("Basket with client id " + clientID + " not found"));
+        return basket.getLineBaskets().stream().map(lineBasketMapper::toDTO).toList();
+    }
 
-
-    public Basket addProductToCart(int clientID, int productID, int quantity) {
-        Client client = clientMapper.toBO(clientService.getClientById(clientID));
-        Product product = productMapper.toBO(productService.getProductById(productID));
+    public LineBasketDTO addProductToCart(int clientID, int productID, int quantity) {
+        Client client = new ClientMapper().toBO(clientService.getClientById(clientID));
+        Product product = new ProductMapper().toBO(productService.getProductById(productID));
 
         Basket basket = basketRepository.findByClient(clientID)
                 .orElseGet(() -> {
@@ -45,9 +48,13 @@ public class BasketService {
                     return basketRepository.save(newBasket);
                 });
 
-        basket.addLineBasket(product, quantity);
-        basket.setActiveState();
-        return basketRepository.save(basket);
+         LineBasket newLineBasket = basket.addLineBasket(product, quantity);
+         basket.setActiveState();
+         basketRepository.save(basket);
+
+         Set<LineBasket> list =basket.getLineBaskets();
+
+        return lineBasketMapper.toDTO(newLineBasket);
     }
 
 
@@ -56,6 +63,8 @@ public class BasketService {
                 .orElseThrow(() -> new ResourceNotFoundException("Basket with client id " + clientID + " not found"));
         basketRepository.delete(basket);
     }
+
+
 
 
 }

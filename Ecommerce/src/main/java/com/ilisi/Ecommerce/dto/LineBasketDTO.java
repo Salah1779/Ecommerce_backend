@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LineBasketDTO {
-	private ProductDTO productID;
-        private BasketDTO basketID;
+	private int basketLineID;
+	private ProductDTO product;
+	private BasketDTO basket;
 	private int quantity;
 	
 

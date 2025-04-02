@@ -32,7 +32,7 @@ public class OrderService {
         return orders.stream().map(orderMapper::toDTO).collect(Collectors.toList());
     }
 
-    // ✅ Save a new order
+
     public OrderDTO saveOrder(OrderDTO orderDTO) {
         Order order = orderMapper.toBO(orderDTO);
         Order savedOrder = orderRepository.save(order);
@@ -42,7 +42,7 @@ public class OrderService {
 
     public boolean deleteOrder(Long orderId) {
         if (!orderRepository.existsById(orderId)) {
-            return false; // Order not found
+            return false;
         }
         orderRepository.deleteById(orderId);
         return true;
@@ -51,7 +51,7 @@ public class OrderService {
     public OrderDTO getOrderById(int id) {
         Optional<Order> order = orderRepository.findById((long) id);
         if (order.isEmpty()) {
-            return null; // Order not found
+            return null;
         }
         return  orderMapper.toDTO(
                 order.get()
