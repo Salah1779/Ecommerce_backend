@@ -1,5 +1,6 @@
 package com.ilisi.Ecommerce.bo;
 
+import com.ilisi.Ecommerce.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -58,7 +59,7 @@ void addLineBasket(Product product, int quantity) {
          LineBasket lineBasket = new LineBasket(this, product, quantity);
          this.lineBaskets.add(lineBasket);
      }
-     else if(quantity <=0 ||product.getStockQuantity() < quantity) {
+     else {
          throw new IllegalArgumentException("Invalid quantity for product: " + product.getLabel());
      }
 
