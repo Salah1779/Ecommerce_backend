@@ -26,7 +26,11 @@ public class GlobalExceptionHandler {
         Response res= new Response(false , HttpStatus.BAD_REQUEST , ex.getMessage() , null);
         return new ResponseEntity<Response>(res, HttpStatus.BAD_REQUEST);
     }
-
+   @ExceptionHandler
+   public ResponseEntity<Response> handleOutOfStock(OutOfStockException ex) {
+       Response res= new Response(false , HttpStatus.BAD_REQUEST , ex.getMessage() , null);
+       return new ResponseEntity<Response>(res, HttpStatus.BAD_REQUEST);
+   }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> handleGenericException(Exception ex) {
         Response res= new Response(false , HttpStatus.INTERNAL_SERVER_ERROR , ex.getMessage() , null);

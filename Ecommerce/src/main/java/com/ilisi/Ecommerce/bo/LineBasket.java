@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "basketLine")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class LineBasket implements Serializable {
     @Id
@@ -22,4 +21,23 @@ public class LineBasket implements Serializable {
     @JoinColumn(name = "basketID")
     private Basket basket;
     private int quantity;
+
+
+    LineBasket(Basket basket, Product product,int quantity) {
+        this.basket = basket;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    boolean decreaseQuantity() {
+        if(quantity==0) return false;
+        this.quantity--;
+        return true;
+    }
+
+    boolean increaseQuantity() {
+        if(product.getStockQuantity() <= quantity) return false;
+        this.quantity ++;
+        return true;
+    }
 }

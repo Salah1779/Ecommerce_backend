@@ -22,6 +22,10 @@ public class Client implements Serializable {
     private String login;
     private String password;
     private Date createddate;
+
+    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY, optional = true)
+    private Basket basket;
+
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<Order> orders;
 

@@ -20,5 +20,5 @@ public class Category implements java.io.Serializable {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> products;
 
-
 }
+
