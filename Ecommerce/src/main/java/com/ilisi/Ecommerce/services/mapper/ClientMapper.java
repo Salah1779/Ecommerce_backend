@@ -14,6 +14,7 @@ public class ClientMapper implements IMapper<Client, ClientDTO> {
         bo.setEmail(dto.getEmail());
         bo.setLogin(dto.getLogin());
         bo.setPassword(dto.getPassword());
+        bo.setCreateddate(dto.getCreateddate());
 
         return bo;
     }
@@ -25,6 +26,7 @@ public class ClientMapper implements IMapper<Client, ClientDTO> {
         dto.setEmail(bo.getEmail());
         dto.setLogin(bo.getLogin());
         dto.setPassword(bo.getPassword());
+        dto.setCreateddate(bo.getCreateddate());
         return dto;
     }
 }

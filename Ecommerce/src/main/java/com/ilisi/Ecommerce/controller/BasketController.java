@@ -1,9 +1,6 @@
 package com.ilisi.Ecommerce.controller;
 
-import com.ilisi.Ecommerce.bo.Basket;
-import com.ilisi.Ecommerce.bo.LineBasket;
 import com.ilisi.Ecommerce.dto.LineBasketDTO;
-import com.ilisi.Ecommerce.exception.ResourceNotFoundException;
 import com.ilisi.Ecommerce.services.BasketService;
 import com.ilisi.Ecommerce.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/basket")
 public class BasketController {
    @Autowired
-    private BasketService basketService;
+    private  BasketService basketService;
 
 
     @GetMapping("/{clientID}")

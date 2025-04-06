@@ -1,6 +1,5 @@
 package com.ilisi.Ecommerce.controller;
 
-import com.ilisi.Ecommerce.bo.Order;
 import com.ilisi.Ecommerce.dto.OrderDTO;
 import com.ilisi.Ecommerce.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/orders")
-@CrossOrigin(origins = "*")  // Permettre l'accès depuis n'importe quel domaine (utile pour les tests)
-
+@RequestMapping("/api/orders")
 public class OrderController {
     @Autowired
     private  OrderService orderService;
@@ -48,7 +45,7 @@ public class OrderController {
     // ✅ Supprimer une commande
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable int id) {
-        orderService.deleteOrder((long) id);
+        orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
 }

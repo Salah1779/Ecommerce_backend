@@ -18,9 +18,10 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<List<ClientDTO>> getAllClients() {
+    public ResponseEntity<Response> getAllClients() {
         List<ClientDTO> clients = clientService.getAllClients();
-        return new ResponseEntity<>(clients, HttpStatus.OK);
+        Response result = new Response(true, HttpStatus.OK, "Clients List", clients);
+        return new ResponseEntity<Response>(result, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -38,9 +39,10 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientDTO> updateClient(@PathVariable Integer id, @RequestBody ClientDTO clientDTO) {
+    public ResponseEntity<Response> updateClient(@PathVariable Integer id, @RequestBody ClientDTO clientDTO) {
         ClientDTO updatedClient = clientService.updateClient(id, clientDTO);
-        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+        Response res = new Response(true, HttpStatus.OK, "Client Updated Successfully", updatedClient);
+        return new ResponseEntity<Response>(res, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

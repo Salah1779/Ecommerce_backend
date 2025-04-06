@@ -8,6 +8,7 @@ import com.ilisi.Ecommerce.bo.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class ClientService {
 
     public ClientDTO saveClient(ClientDTO clientDTO) {
         Client client = clientMapper.toBO(clientDTO);
+        client.setCreateddate(new Date());
         Client savedClient = clientRepository.save(client);
         return clientMapper.toDTO(savedClient);
     }

@@ -19,6 +19,7 @@ public class Product implements Serializable {
 	private String description;
 	private String image;
 	private double retailPrice;
+	@Getter
 	private int stockQuantity;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoryID")

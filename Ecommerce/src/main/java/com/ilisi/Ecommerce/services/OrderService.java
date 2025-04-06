@@ -27,7 +27,7 @@ public class OrderService {
         return orders.stream().map(orderMapper::toDTO).collect(Collectors.toList());
     }
 
-    public List<OrderDTO> getOrdersByClient(Long clientId) {
+    public List<OrderDTO> getOrdersByClient(int clientId) {
         List<Order> orders = orderRepository.findByClientId(clientId);
         return orders.stream().map(orderMapper::toDTO).collect(Collectors.toList());
     }
@@ -40,7 +40,7 @@ public class OrderService {
     }
 
 
-    public boolean deleteOrder(Long orderId) {
+    public boolean deleteOrder(int orderId) {
         if (!orderRepository.existsById(orderId)) {
             return false;
         }
@@ -49,7 +49,7 @@ public class OrderService {
     }
 
     public OrderDTO getOrderById(int id) {
-        Optional<Order> order = orderRepository.findById((long) id);
+        Optional<Order> order = orderRepository.findById(id);
         if (order.isEmpty()) {
             return null;
         }
@@ -60,7 +60,7 @@ public class OrderService {
     }
 
     public OrderDTO updateOrder(int id, OrderDTO order) {
-        Optional<Order> optionalOrder = orderRepository.findById((long) id);
+        Optional<Order> optionalOrder = orderRepository.findById(id);
 
         if (optionalOrder.isPresent()) {
             Order orderToUpdate = optionalOrder.get();

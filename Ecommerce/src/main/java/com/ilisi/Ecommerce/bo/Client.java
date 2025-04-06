@@ -21,6 +21,7 @@ public class Client implements Serializable {
     private String email;
     private String login;
     private String password;
+    @Column(updatable = false)
     private Date createddate;
 
     @OneToOne(mappedBy = "client", fetch = FetchType.LAZY, optional = true)
