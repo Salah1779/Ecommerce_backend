@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 
 @Entity
@@ -28,7 +29,7 @@ public class Basket implements Serializable {
     @JoinColumn(name = "clientID")
     private Client client;
     @OneToMany(mappedBy = "basket" , fetch = FetchType.EAGER)
-    private Set<LineBasket> lineBaskets;
+    private List<LineBasket> lineBaskets=new ArrayList<>();
 
  public void setEmptyState() {
      if(lineBaskets.isEmpty())

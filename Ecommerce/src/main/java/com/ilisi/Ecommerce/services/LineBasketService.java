@@ -10,10 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class LineBasketService {
+    @Autowired
+    private LineBasketMapper lineBasketMapper;
     @Autowired
     private LineBasketRepository lineBasketRepository;
 
@@ -22,6 +25,11 @@ public class LineBasketService {
         lineBasketRepository.delete(lineBasket);
     }
 
+    public List<LineBasketDTO>findAllByBasketID(int basketID) {
+        List<LineBasket> lineBaskets = lineBasketRepository.getByBasketID(basketID);
+        return lineBaskets.stream().map(lineBasketMapper::toDTO).collect(Collectors.toList());
+
+    }
     public void saveLineBasket(LineBasket lineBasket) {
         lineBasketRepository.save(lineBasket);
     }

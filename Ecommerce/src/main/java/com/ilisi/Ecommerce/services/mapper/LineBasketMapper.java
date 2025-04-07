@@ -2,10 +2,17 @@ package com.ilisi.Ecommerce.services.mapper;
 
 import com.ilisi.Ecommerce.bo.LineBasket;
 import com.ilisi.Ecommerce.dto.LineBasketDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LineBasketMapper implements IMapper<LineBasket, LineBasketDTO> {
+    @Autowired
+    private ProductMapper productMapper;
+
+    @Autowired
+    private BasketMapper basketMapper;
+
 
     @Override
     public LineBasketDTO toDTO(LineBasket bo) {
@@ -14,8 +21,8 @@ public class LineBasketMapper implements IMapper<LineBasket, LineBasketDTO> {
         }
         LineBasketDTO dto = new LineBasketDTO();
         dto.setBasketLineID(bo.getBasketLineID());
-        dto.setProduct(new ProductMapper().toDTO(bo.getProduct()));
-        dto.setBasket(new BasketMapper().toDTO(bo.getBasket()));
+        dto.setProduct(productMapper.toDTO(bo.getProduct()));
+        dto.setBasket(basketMapper.toDTO(bo.getBasket()));
         dto.setQuantity(bo.getQuantity());
         return dto;
     }
@@ -26,8 +33,8 @@ public class LineBasketMapper implements IMapper<LineBasket, LineBasketDTO> {
             return null;
         }
         LineBasket lineBasket = new LineBasket();
-        lineBasket.setProduct(new ProductMapper().toBO(dto.getProduct()));
-        lineBasket.setBasket(new BasketMapper().toBO(dto.getBasket()));
+        lineBasket.setProduct(productMapper.toBO(dto.getProduct()));
+        lineBasket.setBasket(basketMapper.toBO(dto.getBasket()));
         lineBasket.setQuantity(dto.getQuantity());
         return lineBasket;
     }

@@ -13,6 +13,4 @@ public class LineBasketDTO {
 	private ProductDTO product;
 	private BasketDTO basket;
 	private int quantity;
-	
-
 }

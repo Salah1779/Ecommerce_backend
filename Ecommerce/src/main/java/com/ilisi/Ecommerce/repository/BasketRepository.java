@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface BasketRepository extends JpaRepository<Basket, Integer> {
     @Query("SELECT b FROM Basket b WHERE b.client.clientID = ?1")
-    Optional<Basket> findByClient(int clientID);
+    Optional<Basket> findByClientID(int clientID);
 }
 
 

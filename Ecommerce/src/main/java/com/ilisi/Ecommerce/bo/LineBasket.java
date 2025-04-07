@@ -14,10 +14,10 @@ public class LineBasket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int basketLineID;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productID")
     private Product product;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "basketID")
     private Basket basket;
     private int quantity;

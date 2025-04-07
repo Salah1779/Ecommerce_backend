@@ -29,6 +29,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> handleGenericException(Exception ex) {
+        ex.printStackTrace();
         Response res= new Response(false , HttpStatus.INTERNAL_SERVER_ERROR , ex.getMessage() , null);
         return new ResponseEntity<Response>(res,HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -3,11 +3,14 @@ package com.ilisi.Ecommerce.services.mapper;
 import com.ilisi.Ecommerce.bo.Basket;
 import com.ilisi.Ecommerce.dto.BasketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BasketMapper implements IMapper<Basket, BasketDTO> {
 
     @Autowired
     private ClientMapper clientMapper;
+
     @Override
     public BasketDTO toDTO(Basket bo) {
         if (bo == null) {

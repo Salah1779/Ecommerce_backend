@@ -11,6 +11,6 @@ import java.util.List;
 public interface LineBasketRepository extends JpaRepository<LineBasket, Integer> {
 
     @Query("SELECT l FROM LineBasket l WHERE l.basket.basketID = ?1")
-    List<LineBasket> findAllByBasketID(Integer basketId);
+    List<LineBasket> getByBasketID(int basketId);
 
 }
